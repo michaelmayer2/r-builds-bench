@@ -1,0 +1,13 @@
+FROM centos:7 
+
+ENV OS_IDENTIFIER centos-7 
+
+ARG R_VERSION
+
+RUN yum -y install epel-release
+
+RUN curl -O https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && yum -y install R-${R_VERSION}-1-1.x86_64.rpm && rm -f R-${R_VERSION}-1-1.x86_64.rpm
+
+RUN yum -y install git gsl-devel 
+COPY run-bench.sh .
+ENTRYPOINT ./run-bench.sh

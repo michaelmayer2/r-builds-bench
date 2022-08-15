@@ -1,0 +1,14 @@
+FROM opensuse/leap:15.3
+
+ENV OS_IDENTIFIER opensuse-153
+
+ARG R_VERSION
+
+RUN zypper --non-interactive install curl
+
+RUN curl -O https://cdn.rstudio.com/r/opensuse-153/pkgs/R-${R_VERSION}-1-1.x86_64.rpm && zypper --non-interactive --no-gpg-checks install R-${R_VERSION}-1-1.x86_64.rpm && rm R-${R_VERSION}-1-1.x86_64.rpm
+
+RUN zypper --non-interactive install git gsl-devel
+COPY run-bench.sh .
+ENTRYPOINT ./run-bench.sh
+
